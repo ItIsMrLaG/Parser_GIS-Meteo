@@ -3,12 +3,14 @@ from bs4 import BeautifulSoup as BeS
 
 
 class FileReader:
+    """This is class handler of the file with information about available cities and their url"""
     def __init__(self, file=None):
         self.file = file
         self.write_f = open(file, 'a', encoding='utf8')
         self.read_f = open(file, 'r', encoding='utf8')
 
     def check_info(self):
+        """OUT-function for getting dict with information in format {'city': 'url'}"""
         lines = self.read_f.readlines()
         cities = {}
         for i in range(len(lines)):
@@ -18,13 +20,16 @@ class FileReader:
         return cities
 
     def minder(self, name, url):
+        """OUT-function which is can be used for adding optional information in format {'city': 'url'}"""
         file = self.write_f
         print(f'{name} -- {url}', file=file)
         self.write_f.close()
 
 
 class Parser(FileReader):
+    """This is parser class of Gismeteo website (https://www.gismeteo.ru/)"""
     def __init__(self, file, headers=None):
+        """HEADERS - user-agent, file - file with information about cities and their url"""
         super().__init__(file)
         if headers is None:
             headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
@@ -32,10 +37,12 @@ class Parser(FileReader):
         self.HEADERS = headers
 
     def get_html(self, url):
+        """Inner function for getting html"""
         info = req.get(url, headers=self.HEADERS, params=None)
         return info
 
     def get_content(self, html):
+        """Inner function for that used for creation the dict with information from the html file"""
         info = {}
         soup = BeS(html, 'html.parser')
         item = soup.find('div', class_='forecast_frame forecast_now')
@@ -46,6 +53,7 @@ class Parser(FileReader):
         return info
 
     def parse(self, town):
+        """OUT-function which is can be used for getting dict with information from Gismeteo"""
         html = self.get_html(self.choose_url(town))
         if html.status_code == 200:
             return self.get_content(html.text)
@@ -53,6 +61,7 @@ class Parser(FileReader):
             print('ERROR')
 
     def choose_url(self, town):
+        """Inner function for getting and changing city url"""
         cities = self.check_info()
         return cities[town] + 'now/'
 
