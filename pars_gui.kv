@@ -1,0 +1,167 @@
+<AllBack@BoxLayout>
+    canvas:
+        Rectangle:
+            source: 'fon.jpg'
+            size: self.size
+            pos: self.pos
+
+<Main_Button@Button>
+    background_normal:''
+    background_color:  '#2874A6'
+
+<Info_Label@Label>
+    canvas.before:
+        Color:
+            rgba: 36/255, 113/255, 163/255, .5
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<Change_Label@Label>
+    canvas.before:
+        Color:
+            rgba: 36/255, 113/255, 163/255, .5
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<AllInput@TextInput>
+    background_color:  '#3498DB'
+
+<LineD@Label>
+    size: 0, 5
+    size_hint: 1 , None
+    canvas.before:
+        Color:
+            rgba: 21/255, 67/255, 96/255, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+##--------------------------------------------------------------------
+
+<ScreenMain>
+    ##-------------------
+    temperature: temp_lab
+    time: time_lab
+    wind: wind_lab
+    snow: snow_lab
+    ##-------------------
+    city: city_input
+    ##-------------------
+    mind: mind_but
+    info: info_but
+    putter: input_but
+    ##-------------------
+
+    GridLayout:
+        size: root.width, root.height
+        rows: 3
+        cols: 1
+
+        AllBack:
+            orientation: "horizontal"
+            size_hint: 0.6, 1
+            spacing: 10
+            padding: 10
+
+            GridLayout:
+                cols: 2
+                rows: 4
+
+                Info_Label:
+                    text: 'Температура'
+                Change_Label:
+                    id: temp_lab
+                Info_Label:
+                    text: 'Время замера'
+                Change_Label:
+                    id: time_lab
+                Info_Label:
+                    text: 'Скорость ветра'
+                Change_Label:
+                    id: wind_lab
+                Info_Label:
+                    text: 'Погода'
+                Change_Label:
+                    id: snow_lab
+
+            Image:
+                size_hint: 0.4 , 1
+                source: 'sun.png'
+                allow_stretch: True
+
+        AllInput:
+            id: city_input
+            size_hint: 1, 0.2
+
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint: 1, 0.2
+
+            Main_Button:
+                id: input_but
+                on_press: None
+            Main_Button:
+                id: mind_but
+                on_press: root.mind_travel()
+            Main_Button:
+                id: info_but
+                on_press: root.info_travel()
+
+##--------------------------------------------------------------------
+<ScreenInfo>
+    AllBack:
+        orientation: "vertical"
+        GridLayout:
+            size_hint: 1, .175
+            cols:2
+            Button:
+                size: 36, 36
+                size_hint: None, None
+                background_normal: "backFinal.ico"
+                on_press: root.home_travel()
+            Label:
+                text: "Как внести новый город"
+        LineD:
+        Info_Label:
+
+
+##-------------------------------------------------------------------
+<ScreenMind>
+    AllBack:
+        padding: 4
+        orientation: "vertical"
+        GridLayout:
+            size_hint: 1, .4
+            cols:2
+            Button:
+                size: 36, 36
+                size_hint: None, None
+                background_normal: "backFinal.ico"
+                on_press: root.home_travel()
+            Label:
+                text: "Настройки"
+        LineD:
+        GridLayout:
+            spacing: 2
+            rows: 2
+            cols: 2
+            Info_Label:
+                text: "Введите название вашего города"
+            AllInput:
+            Info_Label:
+                text: "Введите URL этого города"
+            AllInput:
+        Main_Button:
+            text: "Сохранить новый город"
+            size_hint: 1 , 0.4
+        LineD:
+        GridLayout:
+            size_hint: 1 , 0.5
+            cols: 2
+            Info_Label:
+                text: "Введите город для запоминания"
+            AllInput:
+        Main_Button:
+            text: "Сохранить город"
+            size_hint: 1 , 0.4
