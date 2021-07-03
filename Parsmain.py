@@ -3,7 +3,6 @@ Config.set("graphics", "resizable", 0)
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.widget import Widget
-from kivy.uix.pagelayout import PageLayout
 from kivy.core.window import Window
 from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition
 
