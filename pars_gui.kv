@@ -100,7 +100,7 @@
 
             Main_Button:
                 id: input_but
-                on_press: None
+                on_press: root.parser_go()
             Main_Button:
                 id: mind_but
                 on_press: root.mind_travel()
@@ -128,6 +128,8 @@
 
 ##-------------------------------------------------------------------
 <ScreenMind>
+    name_city: city
+    url_city: url
     AllBack:
         padding: 4
         orientation: "vertical"
@@ -149,12 +151,15 @@
             Info_Label:
                 text: "Введите название вашего города"
             AllInput:
+                id: city
             Info_Label:
                 text: "Введите URL этого города"
             AllInput:
+                id: url
         Main_Button:
             text: "Сохранить новый город"
             size_hint: 1 , 0.4
+            on_press: root.minder()
         LineD:
         GridLayout:
             size_hint: 1 , 0.5

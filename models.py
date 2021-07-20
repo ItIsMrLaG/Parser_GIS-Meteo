@@ -6,24 +6,27 @@ class FileReader:
     """This is class handler of the file with information about available cities and their url"""
     def __init__(self, file=None):
         self.file = file
-        self.write_f = open(file, 'a', encoding='utf8')
-        self.read_f = open(file, 'r', encoding='utf8')
+        # self.write_f = open(self.file, 'a', encoding='utf8')
+        # self.read_f = open(self.file, 'r', encoding='utf8')
 
     def check_info(self):
         """OUT-function for getting dict with information in format {'city': 'url'}"""
-        lines = self.read_f.readlines()
+        read_f = open(self.file, 'r', encoding='utf8')
+        lines = read_f.readlines()
         cities = {}
         for i in range(len(lines)):
             lines[i] = lines[i].strip()
             flag = lines[i].split(" -- ")
             cities[flag[0]] = flag[1]
+        read_f.seek(0)
+        # self.read_f.close()
         return cities
 
     def minder(self, name, url):
         """OUT-function which is can be used for adding optional information in format {'city': 'url'}"""
-        file = self.write_f
+        file = open(self.file, 'a', encoding='utf8')
         print(f'{name} -- {url}', file=file)
-        self.write_f.close()
+        file.close()
 
 
 class Parser(FileReader):
@@ -59,6 +62,7 @@ class Parser(FileReader):
             return self.get_content(html.text)
         else:
             print('ERROR')
+            return {"error": None}
 
     def choose_url(self, town):
         """Inner function for getting and changing city url"""
@@ -66,5 +70,6 @@ class Parser(FileReader):
         return cities[town] + 'now/'
 
 
-d = Parser('mind.txt')
-print(d.parse('Анапа'))
+# d = Parser('mind.txt')
+# print(d.parse('Анапа'))
+# print(d.parse('Екатеринбург'))

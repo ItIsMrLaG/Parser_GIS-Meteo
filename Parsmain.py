@@ -5,11 +5,13 @@ from kivy.lang import Builder
 from kivy.uix.widget import Widget
 from kivy.core.window import Window
 from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition
+from models import *
 
 
 Builder.load_file('pars_gui.kv')
 changer = 1
 
+pars = Parser("mind.txt")
 
 
 class ScreenMain(Screen, Widget):
@@ -43,6 +45,17 @@ class ScreenMain(Screen, Widget):
         changer = self.city.text
         print(self.city.text)'''
 
+    def parser_go(self):
+        try:
+            info = pars.parse(self.city.text)
+            self.temperature.text = info['temp']
+            self.time.text = info['time']
+            self.wind.text = info['wind']
+            self.snow.text = info['full']
+            #TODO добавить меняющуюся картинку
+            self.city.text = ''
+        except:
+            print("Error")
 
 class ScreenInfo(Screen, Widget):
 
@@ -53,7 +66,6 @@ class ScreenInfo(Screen, Widget):
         """this function change your screen to MainScreen"""
         self.manager.current = 'first'
 
-
 class ScreenMind(Screen, Widget):
 
     def __init__(self, **kwargs):
@@ -63,6 +75,10 @@ class ScreenMind(Screen, Widget):
         """this function change your screen to MainScreen"""
         self.manager.current = 'first'
 
+    def minder(self):
+        url = self.url_city.text
+        name = self.name_city.text
+        pars.minder(name, url)
 
 class ParserApp(App):
 
