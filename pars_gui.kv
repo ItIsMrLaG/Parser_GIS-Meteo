@@ -1,13 +1,19 @@
 <AllBack@BoxLayout>
     canvas:
         Rectangle:
-            source: 'fon.jpg'
+            source: 'pictures/fon.jpg'
             size: self.size
             pos: self.pos
 
 <Main_Button@Button>
     background_normal:''
-    background_color:  '#2874A6'
+    background_color:  '#03506E'
+    canvas.before:
+        Color:
+            rgba: 55/255, 171/255, 243/255, 1
+        Line:
+            width: 1.5
+            rectangle: self.x, self.y, self.width, self.height
 
 <Info_Label@Label>
     canvas.before:
@@ -87,7 +93,7 @@
 
             Image:
                 size_hint: 0.4 , 1
-                source: 'sun.png'
+                source: 'pictures/rain_d.png'
                 allow_stretch: True
 
         AllInput:
