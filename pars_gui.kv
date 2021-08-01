@@ -6,6 +6,8 @@
             pos: self.pos
 
 <Main_Button@Button>
+    font_name: 'main_font.ttf'
+    font_size: 13
     background_normal:''
     background_color:  '#03506E'
     canvas.before:
@@ -16,6 +18,8 @@
             rectangle: self.x, self.y, self.width, self.height
 
 <Info_Label@Label>
+    font_name: 'main_font.ttf'
+    font_size: 11
     canvas.before:
         Color:
             rgba: 36/255, 113/255, 163/255, .5
@@ -23,7 +27,10 @@
             pos: self.pos
             size: self.size
 
+
 <Change_Label@Label>
+    font_name: 'main_font.ttf'
+    font_size: 13
     canvas.before:
         Color:
             rgba: 36/255, 113/255, 163/255, .5
@@ -32,7 +39,9 @@
             size: self.size
 
 <AllInput@TextInput>
-    background_color:  '#3498DB'
+    font_name: 'input_font.ttf'
+    background_normal: 'pictures/my_blue1.png'
+    background_active: 'pictures/my_blue.png'
 
 <LineD@Label>
     size: 0, 5
@@ -51,6 +60,7 @@
     time: time_lab
     wind: wind_lab
     snow: snow_lab
+    image: img
     ##-------------------
     city: city_input
     ##-------------------
@@ -92,8 +102,9 @@
                     id: snow_lab
 
             Image:
+                id: img
                 size_hint: 0.4 , 1
-                source: 'pictures/rain_d.png'
+                source: 'pictures/hello.png'
                 allow_stretch: True
 
         AllInput:
@@ -151,6 +162,7 @@
                 text: "Настройки"
         LineD:
         GridLayout:
+            padding: 2
             spacing: 2
             rows: 2
             cols: 2
@@ -166,8 +178,8 @@
             text: "Сохранить новый город"
             size_hint: 1 , 0.4
             on_press: root.minder()
-        LineD:
         GridLayout:
+            padding: 2
             size_hint: 1 , 0.5
             cols: 2
             Info_Label:

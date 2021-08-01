@@ -52,10 +52,39 @@ class ScreenMain(Screen, Widget):
             self.time.text = info['time']
             self.wind.text = info['wind']
             self.snow.text = info['full']
-            #TODO добавить меняющуюся картинку
+            self.img_chooser(info['full'], info['time'])
             self.city.text = ''
         except:
+            self.image.source = 'pictures/bug.png'
             print("Error")
+
+    def img_chooser(self, info, time):
+        time = self.time_chooser(time)
+        if ('рад' in info) or ('роза' in info):
+            self.image.source = 'pictures/storm.png'
+        elif 'сно' in info and time == 'day':
+            self.image.source = 'pictures/sun1.png'
+        elif 'сно' in info and time == 'night':
+            self.image.source = 'pictures/moon1.png'
+        elif 'нег' in info:
+            self.image.source = 'pictures/snow1.png'
+        elif (('ождь' in info) or ('ивень' in info)) and time == 'night':
+            self.image.source = 'pictures/rain_n.png'
+        elif (('ождь' in info) or ('ивень' in info)) and time == 'day':
+            self.image.source = 'pictures/rain_d.png'
+        elif (('блачно' in info) or ('смурно' in info)) and time == 'day':
+            self.image.source = 'pictures/cloudy_d.png'
+        elif (('блачно' in info) or ('смурно' in info)) and time == 'night':
+            self.image.source = 'pictures/cloudy_n.png'
+        else:
+            self.image.source = 'pictures/if_bad.jpg'
+
+    def time_chooser(self, time):
+        time = int(time[0:2])
+        if 20 <= time or time <= 6:
+            return 'night'
+        else:
+            return 'day'
 
 class ScreenInfo(Screen, Widget):
 
@@ -92,8 +121,8 @@ class ParserApp(App):
 
     def win_config(self):
         Window.size = (628, 260)
-        self.icon = None
-        self.title = 'Parser'
+        self.icon = 'pictures/icon.png'
+        self.title = 'Weather'
 
 
 if __name__ == '__main__':
