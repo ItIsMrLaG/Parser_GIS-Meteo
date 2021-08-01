@@ -40,6 +40,8 @@
 
 <AllInput@TextInput>
     font_name: 'input_font.ttf'
+    font_size: 20
+    foreground_color: '#1B2631'
     background_normal: 'pictures/my_blue1.png'
     background_active: 'pictures/my_blue.png'
 
@@ -52,6 +54,15 @@
         Rectangle:
             pos: self.pos
             size: self.size
+
+<LineD_1@Label>
+    size: 0, 5
+    size_hint: 1 , None
+    canvas:
+        Rectangle:
+            source: 'pictures/my_blue.PNG'
+            size: self.size
+            pos: self.pos
 ##--------------------------------------------------------------------
 
 <ScreenMain>
@@ -135,11 +146,11 @@
             Button:
                 size: 36, 36
                 size_hint: None, None
-                background_normal: "backFinal.ico"
+                background_normal: "arrow.ico"
                 on_press: root.home_travel()
             Label:
                 text: "Как внести новый город"
-        LineD:
+        LineD_1:
         Info_Label:
 
 
@@ -147,8 +158,9 @@
 <ScreenMind>
     name_city: city
     url_city: url
+    city_m: city_m
     AllBack:
-        padding: 4
+        padding:4
         orientation: "vertical"
         GridLayout:
             size_hint: 1, .4
@@ -156,11 +168,13 @@
             Button:
                 size: 36, 36
                 size_hint: None, None
-                background_normal: "backFinal.ico"
+                background_normal: "arrow.ico"
                 on_press: root.home_travel()
             Label:
+                font_name: 'main_font.ttf'
+                font_size: 13
                 text: "Настройки"
-        LineD:
+        LineD_1:
         GridLayout:
             padding: 2
             spacing: 2
@@ -185,6 +199,8 @@
             Info_Label:
                 text: "Введите город для запоминания"
             AllInput:
+                id: city_m
         Main_Button:
             text: "Сохранить город"
             size_hint: 1 , 0.4
+            on_press: root.city_mind()

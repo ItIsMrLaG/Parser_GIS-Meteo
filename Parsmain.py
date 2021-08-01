@@ -11,7 +11,7 @@ from models import *
 Builder.load_file('pars_gui.kv')
 changer = 1
 
-pars = Parser("mind.txt")
+pars = Parser("mind.txt", 'city_mind.txt')
 
 
 class ScreenMain(Screen, Widget):
@@ -35,7 +35,7 @@ class ScreenMain(Screen, Widget):
         self.wind.text = 'Strength of wind'
         self.snow.text = 'Fulling things'
         '''-----------------------------'''
-        self.city.text = 'Your city'
+        self.city.text = pars.main_city_read()
         self.mind.text = 'Настройки'
         self.info.text = 'Справка'
         self.putter.text = 'Обновить'
@@ -53,7 +53,6 @@ class ScreenMain(Screen, Widget):
             self.wind.text = info['wind']
             self.snow.text = info['full']
             self.img_chooser(info['full'], info['time'])
-            self.city.text = ''
         except:
             self.image.source = 'pictures/bug.png'
             print("Error")
@@ -90,24 +89,43 @@ class ScreenInfo(Screen, Widget):
 
     def __init__(self, **kwargs):
         super(ScreenInfo, self).__init__(**kwargs)
+        self.text_config()
+
+    def text_config(self):
+        pass
 
     def home_travel(self, *args):
         """this function change your screen to MainScreen"""
         self.manager.current = 'first'
+
 
 class ScreenMind(Screen, Widget):
 
     def __init__(self, **kwargs):
         super(ScreenMind, self).__init__(**kwargs)
+        self.text_config()
+
+    def text_config(self):
+        self.city_m.text = pars.main_city_read()  #TODO add monder of cities
 
     def home_travel(self, *args):
         """this function change your screen to MainScreen"""
         self.manager.current = 'first'
+        self.url_city.text = ''
+        self.name_city.text = ''
+        self.city_m.text = pars.main_city_read()  #TODO add monder of cities
 
     def minder(self):
         url = self.url_city.text
         name = self.name_city.text
-        pars.minder(name, url)
+        if 'https://www.gismeteo.ru/weather' in url:
+            pars.minder(name, url)
+        else:
+            print('problem with url')
+
+    def city_mind(self):
+        city = self.city_m.text
+        pars.main_city_mind(city)
 
 class ParserApp(App):
 

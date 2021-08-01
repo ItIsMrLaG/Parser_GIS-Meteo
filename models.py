@@ -4,8 +4,9 @@ from bs4 import BeautifulSoup as BeS
 
 class FileReader:
     """This is class handler of the file with information about available cities and their url"""
-    def __init__(self, file=None):
+    def __init__(self, file=None, one_city_mind=None):
         self.file = file
+        self.mind = one_city_mind
         # self.write_f = open(self.file, 'a', encoding='utf8')
         # self.read_f = open(self.file, 'r', encoding='utf8')
 
@@ -28,12 +29,24 @@ class FileReader:
         print(f'{name} -- {url}', file=file)
         file.close()
 
+    def main_city_mind(self, city):
+        file = open(self.mind, 'w', encoding='utf8')
+        print(city, file=file)
+        file.close()
+
+    def main_city_read(self):
+        file = open(self.mind, 'r', encoding='utf8')
+        line = file.readline()
+        line = line.strip()
+        file.close()
+        return line
+
 
 class Parser(FileReader):
     """This is parser class of Gismeteo website (https://www.gismeteo.ru/)"""
-    def __init__(self, file, headers=None):
+    def __init__(self, file_url, one_city_mind, headers=None):
         """HEADERS - user-agent, file - file with information about cities and their url"""
-        super().__init__(file)
+        super().__init__(file_url, one_city_mind)
         if headers is None:
             headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
                                      'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36'}
@@ -70,6 +83,7 @@ class Parser(FileReader):
         return cities[town] + 'now/'
 
 
-# d = Parser('mind.txt')
-# print(d.parse('Анапа'))
-# print(d.parse('Екатеринбург'))
+# d = Parser('mind.txt', 'city_mind.txt')
+# d.main_city_mind('rrrr')
+# print(d.main_city_read())
+
